@@ -1,0 +1,323 @@
+﻿<div class="mp-page">
+  <div class="mp-header">
+    <h1>Mark Percentage Tool</h1>
+    <p>Enter total marks and obtained marks to calculate percentage, grade, and status.</p>
+  </div>
+
+  <div class="mp-tool">
+    <div class="mp-card">
+      <div class="mp-grid">
+        <div class="mp-field">
+          <label for="mpTotal">Total Marks</label>
+          <input type="number" id="mpTotal" placeholder="e.g. 500" min="1">
+        </div>
+
+        <div class="mp-field">
+          <label for="mpObtained">Obtained Marks</label>
+          <input type="number" id="mpObtained" placeholder="e.g. 420" min="0">
+        </div>
+      </div>
+
+      <div class="mp-actions">
+        <button type="button" class="mp-btn mp-primary" onclick="mpCalculate()">Calculate</button>
+        <button type="button" class="mp-btn mp-copy" onclick="mpCopy()">Copy Result</button>
+        <button type="button" class="mp-btn mp-reset" onclick="mpReset()">Reset</button>
+      </div>
+
+      <div class="mp-result">
+        <h2>Result</h2>
+        <div class="mp-row"><span>Percentage</span><span id="mpPercentage">--</span></div>
+        <div class="mp-row"><span>Grade</span><span id="mpGrade">--</span></div>
+        <div class="mp-row"><span>Points</span><span id="mpPoints">--</span></div>
+        <div class="mp-row"><span>Status</span><span id="mpStatus">--</span></div>
+        <div class="mp-row"><span>Remaining Marks</span><span id="mpRemaining">--</span></div>
+        <div class="mp-row"><span>Remarks</span><span id="mpRemarks">--</span></div>
+        <div class="mp-msg" id="mpMsg"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .mp-page{
+    width:100%;
+    max-width:100%;
+    margin:0;
+    padding:0;
+  }
+
+  .mp-header{
+    width:100%;
+    background:#f5f7fb;
+    border:1px solid #e5eaf2;
+    border-radius:0;
+    padding:22px 16px;
+    text-align:center;
+    box-sizing:border-box;
+  }
+
+  .mp-header h1{
+    margin:0 0 8px;
+    font-size:clamp(24px,3vw,34px);
+    line-height:1.2;
+    color:#111827;
+  }
+
+  .mp-header p{
+    margin:0 auto;
+    max-width:760px;
+    color:#5b6472;
+    font-size:14px;
+    line-height:1.7;
+  }
+
+  .mp-tool{
+    width:100%;
+    padding:18px 16px 30px;
+    box-sizing:border-box;
+  }
+
+  .mp-card{
+    width:100%;
+    max-width:900px;
+    margin:0 auto;
+    background:#fff;
+    border:1px solid #e8edf5;
+    border-radius:18px;
+    box-shadow:0 12px 35px rgba(15,23,42,.08);
+    overflow:hidden;
+    box-sizing:border-box;
+  }
+
+  .mp-card *{
+    box-sizing:border-box;
+  }
+
+  .mp-card input,
+  .mp-card button{
+    font:inherit;
+  }
+
+  .mp-card input{
+    width:100%;
+    padding:14px;
+    border:1px solid #d9e1ec;
+    border-radius:12px;
+    outline:none;
+    background:#fff;
+  }
+
+  .mp-card input:focus{
+    border-color:#3b82f6;
+    box-shadow:0 0 0 4px rgba(59,130,246,.12);
+  }
+
+  .mp-card label{
+    display:block;
+    margin-bottom:8px;
+    font-size:14px;
+    font-weight:700;
+    color:#374151;
+  }
+
+  .mp-card h2{
+    margin:0 0 14px;
+    font-size:20px;
+    color:#111827;
+  }
+
+  .mp-card .mp-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:16px;
+  }
+
+  .mp-card .mp-field{
+    min-width:0;
+  }
+
+  .mp-card .mp-actions{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:18px;
+  }
+
+  .mp-card .mp-btn{
+    border:none;
+    border-radius:12px;
+    padding:13px 16px;
+    cursor:pointer;
+    font-weight:700;
+    flex:1;
+    min-width:150px;
+  }
+
+  .mp-primary{ background:#2563eb; color:#fff; }
+  .mp-copy{ background:#10b981; color:#fff; }
+  .mp-reset{ background:#e5e7eb; color:#111827; }
+
+  .mp-result{
+    margin-top:22px;
+    background:#f8fafc;
+    border-top:1px solid #e5e7eb;
+    padding:18px;
+  }
+
+  .mp-row{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    padding:10px 0;
+    border-bottom:1px dashed #d8dee8;
+    font-size:15px;
+  }
+
+  .mp-row:last-child{
+    border-bottom:none;
+  }
+
+  .mp-row span:last-child{
+    font-weight:700;
+    text-align:right;
+  }
+
+  .mp-msg{
+    display:none;
+    margin-top:14px;
+    padding:14px;
+    border-radius:12px;
+    text-align:center;
+    font-weight:700;
+  }
+
+  .mp-success{
+    display:block;
+    background:#dcfce7;
+    color:#166534;
+    border:1px solid #86efac;
+  }
+
+  .mp-fail{
+    display:block;
+    background:#fee2e2;
+    color:#991b1b;
+    border:1px solid #fca5a5;
+  }
+
+  @media (max-width:700px){
+    .mp-card .mp-grid{
+      grid-template-columns:1fr;
+    }
+    .mp-card .mp-btn{
+      width:100%;
+    }
+  }
+</style>
+
+<script>
+  function mpGrade(percent){
+    if(percent >= 90) return {g:"A+", p:"4.0", r:"Outstanding"};
+    if(percent >= 80) return {g:"A", p:"3.7", r:"Excellent"};
+    if(percent >= 70) return {g:"B", p:"3.0", r:"Very Good"};
+    if(percent >= 60) return {g:"C", p:"2.5", r:"Good"};
+    if(percent >= 50) return {g:"D", p:"2.0", r:"Average"};
+    if(percent >= 40) return {g:"E", p:"1.0", r:"Pass"};
+    return {g:"F", p:"0.0", r:"Fail"};
+  }
+
+  function mpShowMsg(text, type){
+    const el = document.getElementById("mpMsg");
+    el.textContent = text;
+    el.className = "mp-msg " + (type === "success" ? "mp-success" : "mp-fail");
+  }
+
+  function mpClearMsg(){
+    const el = document.getElementById("mpMsg");
+    el.textContent = "";
+    el.className = "mp-msg";
+    el.style.display = "none";
+  }
+
+  function mpClearResults(){
+    document.getElementById("mpPercentage").textContent = "--";
+    document.getElementById("mpGrade").textContent = "--";
+    document.getElementById("mpPoints").textContent = "--";
+    document.getElementById("mpStatus").textContent = "--";
+    document.getElementById("mpRemaining").textContent = "--";
+    document.getElementById("mpRemarks").textContent = "--";
+  }
+
+  function mpCalculate(){
+    const total = parseFloat(document.getElementById("mpTotal").value);
+    const obtained = parseFloat(document.getElementById("mpObtained").value);
+
+    if(isNaN(total) || isNaN(obtained)){
+      mpClearResults();
+      mpShowMsg("Please enter both total marks and obtained marks.", "fail");
+      document.getElementById("mpMsg").style.display = "block";
+      return;
+    }
+
+    if(total <= 0){
+      mpClearResults();
+      mpShowMsg("Total marks must be greater than 0.", "fail");
+      document.getElementById("mpMsg").style.display = "block";
+      return;
+    }
+
+    if(obtained < 0){
+      mpClearResults();
+      mpShowMsg("Obtained marks cannot be negative.", "fail");
+      document.getElementById("mpMsg").style.display = "block";
+      return;
+    }
+
+    if(obtained > total){
+      mpClearResults();
+      mpShowMsg("Obtained marks cannot be greater than total marks.", "fail");
+      document.getElementById("mpMsg").style.display = "block";
+      return;
+    }
+
+    const percent = (obtained / total) * 100;
+    const result = mpGrade(percent);
+    const status = percent >= 40 ? "Pass" : "Fail";
+
+    document.getElementById("mpPercentage").textContent = percent.toFixed(2) + "%";
+    document.getElementById("mpGrade").textContent = result.g;
+    document.getElementById("mpPoints").textContent = result.p;
+    document.getElementById("mpStatus").textContent = status;
+    document.getElementById("mpRemaining").textContent = (total - obtained).toFixed(0);
+    document.getElementById("mpRemarks").textContent = result.r;
+
+    mpShowMsg(status === "Pass" ? "Student has passed successfully." : "Student has failed.", status === "Pass" ? "success" : "fail");
+    document.getElementById("mpMsg").style.display = "block";
+  }
+
+  function mpReset(){
+    document.getElementById("mpTotal").value = "";
+    document.getElementById("mpObtained").value = "";
+    mpClearResults();
+    mpClearMsg();
+  }
+
+  function mpCopy(){
+    const text = 
+      "Percentage: " + document.getElementById("mpPercentage").textContent + "\n" +
+      "Grade: " + document.getElementById("mpGrade").textContent + "\n" +
+      "Points: " + document.getElementById("mpPoints").textContent + "\n" +
+      "Status: " + document.getElementById("mpStatus").textContent + "\n" +
+      "Remaining Marks: " + document.getElementById("mpRemaining").textContent + "\n" +
+      "Remarks: " + document.getElementById("mpRemarks").textContent;
+
+    navigator.clipboard.writeText(text).then(() => {
+      mpShowMsg("Result copied to clipboard.", "success");
+      document.getElementById("mpMsg").style.display = "block";
+    }).catch(() => {
+      mpShowMsg("Copy failed.", "fail");
+      document.getElementById("mpMsg").style.display = "block";
+    });
+  }
+</script>
+  </script><p>Powered by <a href="https://freecalctools.net/" target="_blank">Free Calc Tools</a></p>
